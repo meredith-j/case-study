@@ -1,4 +1,4 @@
-# case-study
+# 🐝 case-study 🐝
 
 To run package:
 - install dependencies (npm i)
