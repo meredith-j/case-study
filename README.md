@@ -7,6 +7,6 @@ To run package:
 
 .csv file should have the following columns in order to run properly:
 
-Model Number| Device Number | Colour | Size | Price 
---- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |---
-example01 | ### | colour | S-XL | $0.00 
+Model Number| Device Number | Colour | Size | Price |
+--- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |---|
+example01 | ### | colour | S-XL | $0.00 |
