@@ -7,3 +7,5 @@ oldFunctions.js
 !package-lock.json
 !nodemon.json
 !example-output.json
+!example-input.csv
+!example-error-output.csv
