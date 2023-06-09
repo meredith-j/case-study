@@ -19,17 +19,19 @@ function parseFunction () {
         data.push(row.split(","));
 
         // data array must be converted into an object
-        // error handling happens as array is being converted
-
         let dataObj = {
-            name: "",
-            color: "",
-            size: "",
-            price: ""            
+            deviceId: `${data[0][0]}-${data[0][1]}`,
+            color: data[0][2],
+            size: data[0][3],
+            price: data[0][4]            
             };
 
+        // error handling happens
+
         //convert array into json string
-        const jsonObj = JSON.stringify(Object.assign({}, data[0]));
+        const jsonObj = JSON.stringify(Object.assign({}, dataObj));
+
+
 
         // console.log(data)
         console.log(jsonObj)
