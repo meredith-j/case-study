@@ -1,2 +1,3 @@
-const parseFunction = require("./parseFunction")
+const parseFunction = require("./parseFunction");
 
+parseFunction()
