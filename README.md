@@ -2,9 +2,8 @@
 
 To run code:
 - install dependencies (npm i)
-- add input csv file (file has been added to .gitignore to keep company information private)
+- add a csv file to the input folder. This file should be called "case-study-data.csv" in order for the function to work properly (local file has been added to .gitignore to keep company information private).
 - run server (npm run dev)
-- add a csv file to the input folder. This file should be called "case-study-data.csv" in order for the function to work properly.
 
 input .csv file should have the following columns in order to run properly:
 
