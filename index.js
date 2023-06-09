@@ -10,6 +10,12 @@ function parseFunction (csvFilePath) {
     const stream = fs.createReadStream(csvFilePath);
     const reader = readline.createInterface({ input: stream });
 
+    fs.writeFileSync("./output-errors/csv-errors.csv", "Model Number,Device Number,Color,Size,Price", "utf8", function(err) {
+        if (err) {
+            console.log("womp womp")
+        }
+    })
+
     reader.on("line", row => {
         // split document by rows
 
@@ -20,8 +26,9 @@ function parseFunction (csvFilePath) {
         data.push(row.split(","));
 
         // error handling happens
+        
 
-        // data array must be converted into an object
+        // data array with no errors is converted into an object
         let dataObj = {
             deviceId: `${data[0][0]}-${data[0][1]}`,
             color: data[0][2],
