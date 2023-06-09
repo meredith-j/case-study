@@ -6,3 +6,4 @@ oldFunctions.js
 !package.json
 !package-lock.json
 !nodemon.json
+!example-output.json

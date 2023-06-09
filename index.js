@@ -41,7 +41,7 @@ function parseFunction (csvFilePath) {
          });
             
         console.log(jsonFile)
-        console.log(jsonObj)
+        console.log(dataObj)
       });
 
       reader.on("close", () => {
