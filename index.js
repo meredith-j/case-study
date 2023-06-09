@@ -1,9 +1,10 @@
 const fs = require("fs");
 const readline = require("readline");
-const csvFilePath = "./input/case-study-data.csv"
+const { v4: uuidv4 } = require('uuid');
+const csvFile = "./input/case-study-data.csv"
 // const newArray = "./functions.js"
 
-function parseFunction () {
+function parseFunction (csvFilePath) {
     console.log("function initialized 🚀")
 
     const stream = fs.createReadStream(csvFilePath);
@@ -29,19 +30,31 @@ function parseFunction () {
         // error handling happens
 
         //convert array into json string
-        const jsonObj = JSON.stringify(Object.assign({}, dataObj));
+        // const jsonObj = JSON.stringify(Object.assign({}, dataObj));
 
+        let jsonFile = uuidv4() + ".json"
 
-
-        // console.log(data)
-        console.log(jsonObj)
+        // save jsonObj to new json file
+        // fs.writeFile(`${data[0]}`.json, jsonObj, 'utf8')
+        fs.writeFile(jsonFile, JSON.stringify(Object.assign({}, dataObj)), (err) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            else return
+         });
+            
+        console.log(jsonFile)
+        // console.log(jsonObj)
       });
 
       reader.on("close", () => {
         //  Reached the end of file
         console.log("function complete 🥳");
+        return
       });
-
+      
+      return
 };
 
-parseFunction()
+parseFunction(csvFile)
