@@ -19,6 +19,8 @@ function parseFunction (csvFilePath) {
         // push row content into data array        
         data.push(row.split(","));
 
+        // error handling happens
+
         // data array must be converted into an object
         let dataObj = {
             deviceId: `${data[0][0]}-${data[0][1]}`,
@@ -27,15 +29,10 @@ function parseFunction (csvFilePath) {
             price: data[0][4]            
             };
 
-        // error handling happens
-
-        //convert array into json string
-        // const jsonObj = JSON.stringify(Object.assign({}, dataObj));
-
+        //create unique name for each row of csv
         let jsonFile = uuidv4() + ".json"
 
-        // save jsonObj to new json file
-        // fs.writeFile(`${data[0]}`.json, jsonObj, 'utf8')
+        // convert dataObj to json and save new file
         fs.writeFileSync('./output-json/' + jsonFile, JSON.stringify(Object.assign({}, dataObj)), (err) => {
             if (err) {
                 throw (err)
@@ -44,7 +41,7 @@ function parseFunction (csvFilePath) {
          });
             
         console.log(jsonFile)
-        // console.log(jsonObj)
+        console.log(jsonObj)
       });
 
       reader.on("close", () => {
