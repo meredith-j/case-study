@@ -36,7 +36,7 @@ function parseFunction (csvFilePath) {
 
         // save jsonObj to new json file
         // fs.writeFile(`${data[0]}`.json, jsonObj, 'utf8')
-        fs.writeFileSync(jsonFile, JSON.stringify(Object.assign({}, dataObj)), (err) => {
+        fs.writeFileSync('./output-json/' + jsonFile, JSON.stringify(Object.assign({}, dataObj)), (err) => {
             if (err) {
                 throw (err)
             }
