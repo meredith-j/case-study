@@ -5,3 +5,4 @@ oldFunctions.js
 *.json
 !package.json
 !package-lock.json
+!nodemon.json
