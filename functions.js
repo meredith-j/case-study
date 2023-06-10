@@ -1,5 +1,5 @@
 function newArray() {
-    console.log("banana")
+    console.log("")
 }
 
 

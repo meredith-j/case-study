@@ -5,30 +5,65 @@ const csvFile = "./input/case-study-data.csv"
 // const newArray = "./functions.js"
 
 function parseFunction (csvFilePath) {
+
+    // notify team function has started
     console.log("function initialized 🚀")
 
-    const stream = fs.createReadStream(csvFilePath);
+    fs.appendFile
+
+    const stream = fs.createReadStream(csvFilePath, { encoding: "utf-8", delimiter: 2 })
+
     const reader = readline.createInterface({ input: stream });
 
+    // create csv file for errors
     fs.writeFileSync("./output-errors/csv-errors.csv", "Model Number,Device Number,Color,Size,Price", "utf8", function(err) {
         if (err) {
             console.log("womp womp")
         }
     })
 
+    // begin reading through csv input row-by-row
     reader.on("line", row => {
-        // split document by rows
 
         // create array (must be nested here for scope)
         let data = [];
         
-        // push row content into data array        
+        // push row content into array        
         data.push(row.split(","));
 
-        // error handling happens
-        
+        // error handling occurs
 
-        // data array with no errors is converted into an object
+        // check if row is header
+        if (data[0][1] === "Device Number") {
+            return
+        }
+
+        // check if first cell is empty or is not a string
+        else if (data[0][0] == "" || typeof data[0][0] != "string") {
+
+            // log error 
+            console.log("error detected", data)
+
+            fs.appendFile("./output-errors/csv-errors.csv", data, "utf8", function(err){
+                if (err) {
+                    console.log(err)
+                }
+            })
+        }
+
+        // // check is second cell is a number
+        // else if (data[0][1] == "" || typeof data[0][1] != "number") {
+        //     fs.appendFile("./output-errors/csv-errors.csv", data, "utf8", function(err){
+        //         if (err) {
+        //             console.log(err)
+        //         }
+        //     })
+        // }
+
+        // if no errors, row is converted to json file
+         else {
+
+        // data array is converted into an object
         let dataObj = {
             deviceId: `${data[0][0]}-${data[0][1]}`,
             color: data[0][2],
@@ -36,7 +71,7 @@ function parseFunction (csvFilePath) {
             price: data[0][4]            
             };
 
-        //create unique name for each row of csv
+        //create unique name for each row of csv/json file
         let jsonFile = uuidv4() + ".json"
 
         // convert dataObj to json and save new file
@@ -44,15 +79,19 @@ function parseFunction (csvFilePath) {
             if (err) {
                 throw (err)
             }
+
             else return
          });
-            
-        console.log(jsonFile)
-        console.log(dataObj)
+        }   
+
+        // console.log(jsonFile)
+        // console.log(dataObj)
       });
 
+      // file has been read, end stream
       reader.on("close", () => {
-        //  Reached the end of file
+        
+        // notify team function has completed
         console.log("function complete 🥳");
         return
       });
