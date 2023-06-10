@@ -16,7 +16,7 @@ function parseFunction (csvFilePath) {
     const reader = readline.createInterface({ input: stream });
 
     // create csv file for errors
-    fs.writeFileSync("./output-errors/csv-errors.csv", "Model Number,Device Number,Color,Size,Price", "utf8", function(err) {
+    fs.writeFileSync("./output-errors/csv-errors.csv", "Model Number,Device Number,Color,Size,Price,", function(err) {
         if (err) {
             console.log("womp womp")
         }
@@ -44,21 +44,25 @@ function parseFunction (csvFilePath) {
             // log error 
             console.log("error detected", data)
 
-            fs.appendFile("./output-errors/csv-errors.csv", data, "utf8", function(err){
+            fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
                 if (err) {
                     console.log(err)
                 }
             })
+
+            return
         }
 
-        // // check is second cell is a number
-        // else if (data[0][1] == "" || typeof data[0][1] != "number") {
-        //     fs.appendFile("./output-errors/csv-errors.csv", data, "utf8", function(err){
-        //         if (err) {
-        //             console.log(err)
-        //         }
-        //     })
-        // }
+        // // check is second cell is empty or not a number
+        else if (data[0][1] == "" || isNaN(data[0][1])) {
+            fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
+                if (err) {
+                    console.log(err)
+                }
+            })
+
+            return
+        }
 
         // if no errors, row is converted to json file
          else {
