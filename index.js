@@ -38,8 +38,15 @@ function parseFunction (csvFilePath) {
             return
         }
 
-        // check if first cell is empty or is not a string
-        else if (data[0][0] == "" || typeof data[0][0] != "string") {
+        // check if model name, color or size columns are empty or are not a string
+        else if (data[0][0] == ""
+                || data[0][2] == ""
+                || data[0][3] == ""
+                || data[0][4] == ""
+                || typeof data[0][0] != "string"
+                || typeof data[0][2] != "string"
+                || typeof data[0][3] != "string"
+                || typeof data[0][4] != "string") {
 
             // log error 
             console.log("error detected", data)
@@ -53,7 +60,7 @@ function parseFunction (csvFilePath) {
             return
         }
 
-        // // check is second cell is empty or not a number
+        // check if model number column is empty or not a number
         else if (data[0][1] == "" || isNaN(data[0][1])) {
             fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
                 if (err) {
@@ -63,6 +70,9 @@ function parseFunction (csvFilePath) {
 
             return
         }
+
+        // check if price column is empty or not data type: float
+        
 
         // if no errors, row is converted to json file
          else {
