@@ -47,7 +47,6 @@ function parseFunction (csvFilePath) {
             errors ++
 
             console.log("error detected", data[0])
-            console.log("error count:", errors)
 
             fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
                 if (err) {
@@ -65,7 +64,6 @@ function parseFunction (csvFilePath) {
             errors ++
 
             console.log("error detected", data[0])
-            console.log("error count:", errors)
 
             fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
                 if (err) {
@@ -82,7 +80,6 @@ function parseFunction (csvFilePath) {
             // log error 
             errors ++
             console.log("error detected", data[0])
-            console.log("error count:", errors)
 
             fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
                 if (err) {
@@ -126,6 +123,7 @@ function parseFunction (csvFilePath) {
         
         // notify team function has completed
         if (errors > 0 ) {
+            // MailApp.sendEmail("mjonatan@me.com", "Function ran with errors", "Ecobee function has finished running. Please see error log attached.");
             console.log(`function completed with ${errors} errors 🙃`)
         }
 
@@ -133,7 +131,7 @@ function parseFunction (csvFilePath) {
 
             fs.unlink("./output-errors/csv-errors.csv", (err) => {
                 if (err) {
-                    throw err;
+                    console.log(err);
                 }
             })
 
