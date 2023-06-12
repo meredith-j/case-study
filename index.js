@@ -11,7 +11,7 @@ function parseFunction (csvFilePath) {
 
     fs.appendFile
 
-    const stream = fs.createReadStream(csvFilePath, { encoding: "utf-8", delimiter: 2 })
+    const stream = fs.createReadStream(csvFilePath, { encoding: "utf-8"})
 
     const reader = readline.createInterface({ input: stream });
 
@@ -21,6 +21,9 @@ function parseFunction (csvFilePath) {
             console.log("womp womp")
         }
     })
+
+    // set up error counter
+    let errors = 0;
 
     // begin reading through csv input row-by-row
     reader.on("line", row => {
@@ -42,7 +45,10 @@ function parseFunction (csvFilePath) {
         else if (data[0][0] == "" || data[0][2] == "" || data[0][3] == "" || !isNaN(data[0][0]) || !isNaN(data[0][2]) || !isNaN(data[0][3])) {
 
             // log error
+            errors ++
+
             console.log("error detected", data[0])
+            console.log("error count:", errors)
 
             fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
                 if (err) {
@@ -57,7 +63,10 @@ function parseFunction (csvFilePath) {
         else if (data[0][1] == "" || Number.isInteger(data[0][1]) || data[0][1] % 1 !== 0) {
 
             // log error
+            errors ++
+
             console.log("error detected", data[0])
+            console.log("error count:", errors)
 
             fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
                 if (err) {
@@ -72,7 +81,9 @@ function parseFunction (csvFilePath) {
         else if (data[0][4] === "" || isNaN(data[0][4]) || parseFloat(data[0][4]) % 1 == false) {
 
             // log error 
+            errors ++
             console.log("error detected", data[0])
+            console.log("error count:", errors)
 
             fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
                 if (err) {
@@ -105,7 +116,7 @@ function parseFunction (csvFilePath) {
             else return
          });
 
-         console.log("function worked 🤓", dataObj)
+         console.log("row success 🤓", dataObj)
         }   
 
 
@@ -115,8 +126,14 @@ function parseFunction (csvFilePath) {
       reader.on("close", () => {
         
         // notify team function has completed
-        console.log("function complete 🥳");
-        return
+        if (errors > 0 ) {
+            console.log(`function completed with ${errors} errors 🙃`)
+        }
+
+        else {
+            console.log("function complete 🥳");
+            return
+        }
       });
       
       return
