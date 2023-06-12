@@ -2,7 +2,6 @@ const fs = require("fs");
 const readline = require("readline");
 const { v4: uuidv4 } = require('uuid');
 const csvFile = "./input/case-study-data.csv"
-// const newArray = "./functions.js"
 
 function parseFunction (csvFilePath) {
 
@@ -131,6 +130,13 @@ function parseFunction (csvFilePath) {
         }
 
         else {
+
+            fs.unlink("./output-errors/csv-errors.csv", (err) => {
+                if (err) {
+                    throw err;
+                }
+            })
+
             console.log("function complete 🥳");
             return
         }
