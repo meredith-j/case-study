@@ -1,1 +1,6 @@
-{"deviceId":"EXAMPLE-01","color":"COLOR","size":"S-XL","price":"#.##"}
+{
+    "deviceId": "MODEL1-004",
+    "color": "Orange",
+    "size": "M",
+    "price": "19.99"
+}

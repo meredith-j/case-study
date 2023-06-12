@@ -39,17 +39,10 @@ function parseFunction (csvFilePath) {
         }
 
         // check if model name, color or size columns are empty or are not a string
-        else if (data[0][0] == ""
-                || data[0][2] == ""
-                || data[0][3] == ""
-                || data[0][4] == ""
-                || typeof data[0][0] != "string"
-                || typeof data[0][2] != "string"
-                || typeof data[0][3] != "string"
-                || typeof data[0][4] != "string") {
+        else if (data[0][0] == "" || data[0][2] == "" || data[0][3] == "" || typeof data[0][0] != "string" || typeof data[0][2] != "string" || typeof data[0][3] != "string") {
 
             // log error 
-            console.log("error detected", data)
+            console.log("old error detected", data[0])
 
             fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
                 if (err) {
@@ -61,7 +54,9 @@ function parseFunction (csvFilePath) {
         }
 
         // check if model number column is empty or not a number
-        else if (data[0][1] == "" || isNaN(data[0][1])) {
+        else if (data[0][1] == "" || data[0][1] % 1 == true) {
+
+            console.log("old error detected", data[0])
             fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
                 if (err) {
                     console.log(err)
@@ -72,8 +67,21 @@ function parseFunction (csvFilePath) {
         }
 
         // check if price column is empty or not data type: float
-        
+        else if (data[0][4] === ""
+        || isNaN(data[0][4] || Number.isInteger(data[0][4]))) {
 
+            // log error 
+            console.log("error detected", typeof data[0][4], data[0])
+            console.log("hello?")
+
+            fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
+                if (err) {
+                    console.log(err)
+                }
+            })
+
+        }
+        
         // if no errors, row is converted to json file
          else {
 
@@ -98,8 +106,6 @@ function parseFunction (csvFilePath) {
          });
         }   
 
-        // console.log(jsonFile)
-        // console.log(dataObj)
       });
 
       // file has been read, end stream
