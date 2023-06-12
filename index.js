@@ -39,8 +39,9 @@ function parseFunction (csvFilePath) {
         }
 
         // check if model name, color or size columns are empty or are not a string
-        else if (data[0][0] == "" || data[0][2] == "" || data[0][3] == "" || typeof data[0][0] != "string" || typeof data[0][2] != "string" || typeof data[0][3] != "string") {
+        else if (data[0][0] == "" || data[0][2] == "" || data[0][3] == "" || !isNaN(data[0][0]) || !isNaN(data[0][2]) || !isNaN(data[0][3])) {
 
+            // log error
             console.log("error detected", data[0])
 
             fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
@@ -53,15 +54,11 @@ function parseFunction (csvFilePath) {
         }
 
         // check if model number column is empty or not a number
-        else if (data[0][1] == "" || Number.isInteger(data[0][1]) || data[0][1] % 1 !== 0
-        
-        // || parseFloat(data[0][1]) % 1 === 1
-        // || isNaN(data[0][1]) || parseFloat(data[0][1]) % 1 == true
-        // || typeof data[0][1] === "number"
-        // || parseFloat(data[0][1]) % 1 !== false
-        ) {
+        else if (data[0][1] == "" || Number.isInteger(data[0][1]) || data[0][1] % 1 !== 0) {
 
-            console.log("error detected", "LOOKING FOR THIS", data[0][1], data[0])
+            // log error
+            console.log("error detected", data[0])
+
             fs.appendFile("./output-errors/csv-errors.csv", `\n${data[0].toString()}`, "utf8", function(err){
                 if (err) {
                     console.log(err)
@@ -93,7 +90,7 @@ function parseFunction (csvFilePath) {
             deviceId: `${data[0][0]}-${data[0][1]}`,
             color: data[0][2],
             size: data[0][3],
-            price: data[0][4]            
+            price: Number(data[0][4])            
             };
 
         //create unique name for each row of csv/json file
@@ -102,13 +99,13 @@ function parseFunction (csvFilePath) {
         // convert dataObj to json and save new file
         fs.writeFileSync('./output-json/' + jsonFile, JSON.stringify(Object.assign({}, dataObj)), (err) => {
             if (err) {
-                throw (err)
+                console.log(err)
             }
 
             else return
          });
 
-         console.log("function worked", data[0])
+         console.log("function worked 🤓", dataObj)
         }   
 
 
