@@ -2,6 +2,7 @@ const fs = require("fs");
 const readline = require("readline");
 const { v4: uuidv4 } = require('uuid');
 const csvFile = "./input/case-study-data.csv"
+const nodemailer = require('nodemailer')
 
 function parseFunction (csvFilePath) {
 
@@ -122,17 +123,21 @@ function parseFunction (csvFilePath) {
       reader.on("close", () => {
         
         // notify team function has completed
+
+        // function was completed and there were errors
         if (errors > 0 ) {
-            // MailApp.sendEmail("mjonatan@me.com", "Function ran with errors", "Ecobee function has finished running. Please see error log attached.");
             console.log(`function completed with ${errors} errors 🙃`)
         }
 
+        // function was completed and there were not errors
         else {
 
+            // delete error output csv
             fs.unlink("./output-errors/csv-errors.csv", (err) => {
                 if (err) {
                     console.log(err);
                 }
+
             })
 
             console.log("function complete 🥳");
