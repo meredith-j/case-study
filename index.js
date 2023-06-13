@@ -1,26 +1,39 @@
 const fs = require("fs");
 const readline = require("readline");
 const { v4: uuidv4 } = require('uuid');
-const csvFile = "./input/case-study-data.csv"
-const {countDecimals} = "./functions.js"
-const nodemailer = require('nodemailer');
-const { count } = require("console");
+const csvFile = "./input/case-study-data.csv";
+require("dotenv").config();
+const { CourierClient } = require("@trycourier/courier");
+
+const apiKey = process.env.COURIER_API;
 
 function parseFunction (csvFilePath) {
 
     // notify team function has started
     console.log("function initialized 🚀")
 
-    fs.appendFile
+    const courier = CourierClient({ authorizationToken: apiKey });
 
+    const { requestId } = courier.send({
+        message: {
+          to: {
+            email: "mjonatan@me.com",
+          },
+          template: "0V6P6AN3JZMMSRPQF5J8QRZ91KNF",
+          data: {
+          },
+        },
+      });
+
+
+    // initialize reading of input csv file
     const stream = fs.createReadStream(csvFilePath, { encoding: "utf-8"})
-
     const reader = readline.createInterface({ input: stream });
 
     // create csv file for errors
     fs.writeFileSync("./output-errors/csv-errors.csv", "Model Number,Device Number,Color,Size,Price,", function(err) {
         if (err) {
-            console.log("womp womp")
+            console.log(err)
         }
     })
 
@@ -175,12 +188,21 @@ function parseFunction (csvFilePath) {
 
       // file has been read, end stream
       reader.on("close", () => {
-        
-        // notify team function has completed
 
         // function was completed and there were errors
         if (errors > 0 ) {
             console.log(`function completed with ${errors} errors 🙃`)
+
+            const { requestId } = courier.send({
+                message: {
+                  to: {
+                    email: "mjonatan@me.com",
+                  },
+                  template: "EC6E0BKC9YMH4KMYED9NT1WAXKVW",
+                  data: {
+                  },
+                },
+              });
         }
 
         // function was completed and there were not errors
@@ -191,8 +213,18 @@ function parseFunction (csvFilePath) {
                 if (err) {
                     console.log(err);
                 }
-
             })
+
+            const { requestId } = courier.send({
+                message: {
+                  to: {
+                    email: "mjonatan@me.com",
+                  },
+                  template: "FBYRTZEW184AQQP28HBQYH94NM87",
+                  data: {
+                  },
+                },
+              });
 
             console.log("function complete 🥳");
             return

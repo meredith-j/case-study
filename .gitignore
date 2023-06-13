@@ -3,6 +3,7 @@
 *.csv
 oldFunctions.js
 *.json
+.env
 !package.json
 !package-lock.json
 !nodemon.json
