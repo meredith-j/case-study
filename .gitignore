@@ -4,6 +4,7 @@
 oldFunctions.js
 *.json
 .env
+case-study-data.csv
 !package.json
 !package-lock.json
 !nodemon.json
