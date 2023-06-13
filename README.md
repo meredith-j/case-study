@@ -2,7 +2,9 @@
 
 To run code:
 - install dependencies (npm i)
+- get courier api key and create .env folder (needed to send email notifications)
 - add a csv file to the input folder. This file should be called "case-study-data.csv" in order for the function to work properly (local file has been added to .gitignore to keep company information private).
+- csv file should have rows of input for function to run through
 - run server (npm run dev)
 
 input .csv file should have the following columns in order to run properly:
